@@ -341,5 +341,23 @@ class TargetPostgres(SQLTarget):
             required=False,
             description="SSH Tunnel Configuration, this is a json object",
         ),
+        th.Property(
+            "index_maps",
+            th.ObjectType(
+                additional_properties=th.CustomType(
+                    {
+                        "type": ["object"],
+                        "properties": {
+                            "__index_properties__": {
+                                "type": ["array", "null"],
+                                "items": {"type": "string"},
+                            },
+                        },
+                    },
+                ),
+            ),
+            required=False,
+            description="Index maps",
+        ),
     ).to_dict()
     default_sink_class = PostgresSink

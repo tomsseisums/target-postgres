@@ -26,6 +26,7 @@ class PostgresSink(SQLSink):
         """Initialize SQL Sink. See super class for more details."""
         super().__init__(*args, **kwargs)
         self.temp_table_name = self.generate_temp_table_name()
+        print(self.config.get("index_maps", None))
 
     @property
     def append_only(self) -> bool:
