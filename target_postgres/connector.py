@@ -385,10 +385,14 @@ class PostgresConnector(SQLConnector):
         """
         columns: list[sa.Column] = []
         primary_keys = primary_keys or []
-        index_properties = (
-            self.config.get("index_maps", {})
-            .get(table_name, {})
-            .get("__index__properties__", [])
+        index_maps = self.config.get("index_maps", {})
+        table_index_map = index_maps.get(table_name, {})
+        index_properties = table_index_map.get("__index__properties__", [])
+        self.logger.info(
+            "INDEX MAPS: %s | TABLE INDEX MAP: %s | INDEX PROPERTIES: %s",
+            index_maps,
+            table_index_map,
+            index_properties,
         )
         try:
             properties: dict = schema["properties"]
