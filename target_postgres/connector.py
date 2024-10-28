@@ -387,7 +387,7 @@ class PostgresConnector(SQLConnector):
         primary_keys = primary_keys or []
         index_maps = self.config.get("index_maps", {})
         table_index_map = index_maps.get(table_name, {})
-        index_properties = table_index_map.get("__index__properties__", [])
+        index_properties = table_index_map.get("__index_properties__", [])
         self.logger.info("INDEX MAPS: %s", index_maps)
         self.logger.info("TABLE NAME: %s", table_name)
         self.logger.info("TABLE INDEX MAP: %s", table_index_map)
