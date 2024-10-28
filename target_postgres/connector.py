@@ -385,6 +385,11 @@ class PostgresConnector(SQLConnector):
         """
         columns: list[sa.Column] = []
         primary_keys = primary_keys or []
+        index_properties = (
+            self.config.get("index_maps", {})
+            .get(table_name, {})
+            .get("__index__properties__", [])
+        )
         try:
             properties: dict = schema["properties"]
         except KeyError:
@@ -395,11 +400,13 @@ class PostgresConnector(SQLConnector):
 
         for property_name, property_jsonschema in properties.items():
             is_primary_key = property_name in primary_keys
+            is_index_property = property_name in index_properties
             columns.append(
                 sa.Column(
                     property_name,
                     self.to_sql_type(property_jsonschema),
                     primary_key=is_primary_key,
+                    index=is_index_property,
                     autoincrement=False,  # See: https://github.com/MeltanoLabs/target-postgres/issues/193 # noqa: E501
                 )
             )

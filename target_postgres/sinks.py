@@ -54,8 +54,6 @@ class PostgresSink(SQLSink):
         """
         self.append_only = self.key_properties is None or self.key_properties == []
 
-        self.logger.info("INDEX MAPS: %s", self.config.get("index_maps", None))
-
         if self.schema_name:
             self.connector.prepare_schema(self.schema_name)
         with self.connector._connect() as connection, connection.begin():
