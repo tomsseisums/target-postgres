@@ -385,13 +385,12 @@ class PostgresConnector(SQLConnector):
         """
         columns: list[sa.Column] = []
         primary_keys = primary_keys or []
+
+        # Resolve additional index properties
         index_maps = self.config.get("index_maps", {})
         table_index_map = index_maps.get(table_name, {})
         index_properties = table_index_map.get("__index_properties__", [])
-        self.logger.info("INDEX MAPS: %s", index_maps)
-        self.logger.info("TABLE NAME: %s", table_name)
-        self.logger.info("TABLE INDEX MAP: %s", table_index_map)
-        self.logger.info("INDEX PROPERTIES: %s", index_properties)
+
         try:
             properties: dict = schema["properties"]
         except KeyError:
