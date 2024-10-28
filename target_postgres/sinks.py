@@ -25,8 +25,7 @@ class PostgresSink(SQLSink):
     def __init__(self, *args, **kwargs):
         """Initialize SQL Sink. See super class for more details."""
         super().__init__(*args, **kwargs)
-        # self.temp_table_name = self.generate_temp_table_name()
-        self.logger.info("INDEX MAPS: %s", self.config.get("index_maps", None))
+        self.temp_table_name = self.generate_temp_table_name()
 
     @property
     def append_only(self) -> bool:
@@ -54,6 +53,8 @@ class PostgresSink(SQLSink):
         Table entities in the target database.
         """
         self.append_only = self.key_properties is None or self.key_properties == []
+
+        self.logger.info("INDEX MAPS: %s", self.config.get("index_maps", None))
 
         if self.schema_name:
             self.connector.prepare_schema(self.schema_name)
