@@ -388,12 +388,10 @@ class PostgresConnector(SQLConnector):
         index_maps = self.config.get("index_maps", {})
         table_index_map = index_maps.get(table_name, {})
         index_properties = table_index_map.get("__index__properties__", [])
-        self.logger.info(
-            "INDEX MAPS: %s | TABLE INDEX MAP: %s | INDEX PROPERTIES: %s",
-            index_maps,
-            table_index_map,
-            index_properties,
-        )
+        self.logger.info("INDEX MAPS: %s", index_maps)
+        self.logger.info("TABLE NAME: %s", table_name)
+        self.logger.info("TABLE INDEX MAP: %s", table_index_map)
+        self.logger.info("INDEX PROPERTIES: %s", index_properties)
         try:
             properties: dict = schema["properties"]
         except KeyError:
